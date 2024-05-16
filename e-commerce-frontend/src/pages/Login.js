@@ -1,14 +1,52 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import logo from '../assets/logo_niya1.png'
 import { Link } from 'react-router-dom'
 import { IoEyeSharp, IoEyeOffSharp } from 'react-icons/io5'; // Import the icons
+import { useForm } from 'react-hook-form';
+import summaryApi from '../common';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from 'react-router-dom';
+import Context from '../context';
 
 const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
+    const {register, getValues, control, handleSubmit, formState: {errors}, reset} = useForm();
+    const navigate = useNavigate();
+    const {fetchUserDetails} = useContext(Context)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
+    const onFormSubmit = async(data) => {
+        try {
+            const res = await fetch(summaryApi.login.url, {
+                method: summaryApi.login.method,
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const responseData = await res.json();
+    
+            if (responseData.success) {
+                toast.success(responseData.message); 
+                navigate('/')
+                fetchUserDetails()            
+            } 
+            else {
+                toast.error(responseData.message);
+            }
+            
+        } 
+       
+        catch (error) {
+            
+            toast.error('An error occurred while submitting the form.');
+        }
+    }
     return (
         <section id='login'>
             <section class="bg-gray-100 min-h-screen flex box-border justify-center items-center">
@@ -17,8 +55,8 @@ const Login = () => {
                         <h2 class="font-bold text-3xl text-[#002D74]">Login</h2>
                         <p class="text-sm mt-4 text-[#002D74]">If you already a member, easily log in now.</p>
 
-                        <form action="" class="flex flex-col gap-4">
-                            <input class="p-2 mt-8 rounded-xl border" type="email" name="email" placeholder="Email" />
+                        <form action="" class="flex flex-col gap-4" onSubmit={handleSubmit(onFormSubmit)}>
+                            <input class="p-2 mt-8 rounded-xl border" type="email" name="email" placeholder="Email" {...register('email')} />
                             <div className="relative flex">
                                 <input
                                     className="p-2 pr-10 rounded-xl border w-full"
@@ -26,6 +64,7 @@ const Login = () => {
                                     name="password"
                                     id="password"
                                     placeholder="Password"
+                                    {...register('password')}
                                 />
                                 <button
                                     type="button"
@@ -70,6 +109,7 @@ const Login = () => {
                     </div>
                 </div>
             </section>
+            
         </section>
 
 

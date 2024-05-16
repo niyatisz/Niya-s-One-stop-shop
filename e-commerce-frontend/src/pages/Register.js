@@ -1,33 +1,67 @@
 import React, { useState } from 'react';
 import logo from '../assets/logo_niya1.png';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IoEyeSharp, IoEyeOffSharp } from 'react-icons/io5'; // Import the icons
 import { FaCircleUser } from "react-icons/fa6";
 import dummyUser from '../assets/dummy-user.png'
+import { useForm } from 'react-hook-form';  
+import summaryApi from '../common';
+import imageTobase64 from '../helpers/imageToBase64';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
-    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-    const [photo, setPhoto] = useState(null);
-    const [photoPreview, setPhotoPreview] = useState(null);
+    const [photo, setPhoto] = useState('');
+    const navigate = useNavigate();
+    
+    const {register, getValues, control, handleSubmit, formState: {errors}, reset} = useForm();
+    
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
     };
 
-    const toggleConfirmPasswordVisibility = () => {
-        setShowConfirmPassword(!showConfirmPassword);
-    };
-    const handlePhotoUpload = (e) => {
+    const handlePhotoUpload = async(e) => {
         const file = e.target.files[0];
-        setPhoto(file);
-        // Generate a preview of the uploaded photo
-        const reader = new FileReader();
-        reader.onload = () => {
-            setPhotoPreview(reader.result);
-        };
-        reader.readAsDataURL(file);
+        const imagePic = await imageTobase64(file)
+        
+        setPhoto((prev)=>{
+            return{
+              ...prev,
+              image : imagePic
+              
+            }
+          })
+        
     };
+    const onFormSubmit = async (data) => {
+        try {
+            const res = await fetch(summaryApi.register.url, {
+                method: summaryApi.register.method,
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+    
+            const responseData = await res.json();
+    
+            if (responseData.success) {
+                toast.success(responseData.message);
+                reset();
+                navigate('/login');  
+            } 
+            else {
+                toast.error(responseData.message);
+            }
+        } catch (error) {
+            
+            toast.error('An error occurred while submitting the form.');
+        }
+    };
+    
+
 
     return (
         <section id='register'>
@@ -37,23 +71,23 @@ const Register = () => {
                         <h2 className="font-bold text-3xl text-[#002D74]">Register</h2>
                         <p className="text-sm mt-4 text-[#002D74]">Welcome to One, stop shop!</p>
 
-                        <form action="" className="flex flex-col gap-4">
+                        <form action="" className="flex flex-col gap-4" onSubmit={handleSubmit(onFormSubmit)}>
                             <div className='w-20 h-20 mx-auto relative overflow-hidden rounded-full'>
                                 <div>
-                                    <img src={photoPreview || dummyUser} alt='login icons' />
+                                    <img src={photo.image || dummyUser} alt='login icons'  />
                                 </div>
                                 <form>
                                     <label>
                                         <div className='text-xs bg-opacity-80 bg-slate-200 pb-4 pt-2 cursor-pointer text-center absolute bottom-0 w-full'>
                                             Upload  Photo
                                         </div>
-                                        <input type='file' className='hidden' onChange={handlePhotoUpload} />
+                                        <input type='file' className='hidden' onChange={handlePhotoUpload}/>
                                     </label>
                                 </form>
                             </div>
-                            <input className="p-2 mt-8 rounded-xl border" type="text" name="name" placeholder="Name" />
-                            <input className="p-2 rounded-xl border" type="email" name="email" placeholder="Email" />
-                            <input className="p-2 rounded-xl border" type="number" name="phone" placeholder="Phone" />
+                            <input className="p-2 mt-8 rounded-xl border" type="text" name="name" placeholder="Name" {...register("name", {required: true})} />
+                            <input className="p-2 rounded-xl border" type="email" name="email" placeholder="Email" {...register("email",{required:true})} />
+                            <input className="p-2 rounded-xl border" type="number" name="phone" placeholder="Phone" {...register("phone",{required:true})} />
 
                             <div className="relative flex">
                                 <input
@@ -62,6 +96,7 @@ const Register = () => {
                                     name="password"
                                     id="password"
                                     placeholder="Password"
+                                    {...register("password", { required: true })}
                                 />
                                 <button
                                     type="button"
@@ -71,24 +106,6 @@ const Register = () => {
                                     {showPassword ? <IoEyeOffSharp /> : <IoEyeSharp />}
                                 </button>
                             </div>
-
-                            <div className="relative flex">
-                                <input
-                                    className="p-2 pr-10 rounded-xl border w-full"
-                                    type={showConfirmPassword ? "text" : "password"}
-                                    name="confirmPassword"
-                                    id="confirmPassword"
-                                    placeholder="Confirm Password"
-                                />
-                                <button
-                                    type="button"
-                                    onClick={toggleConfirmPasswordVisibility}
-                                    className="absolute inset-y-0 right-0 pr-3 flex items-center focus:outline-none"
-                                >
-                                    {showConfirmPassword ? <IoEyeOffSharp /> : <IoEyeSharp />}
-                                </button>
-                            </div>
-
                             <button className="bg-[#002D74] text-white py-2 rounded-xl hover:scale-105 duration-300 hover:bg-[#206ab1] font-medium" type="submit" style={{ backgroundColor: 'rgb(56, 45, 94)' }}>Register</button>
                         </form>
 
@@ -104,6 +121,7 @@ const Register = () => {
                     </div>
                 </div>
             </section>
+             
         </section>
     );
 }
