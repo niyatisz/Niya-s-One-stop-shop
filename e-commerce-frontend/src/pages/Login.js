@@ -48,7 +48,7 @@ const Login = () => {
         }
     }
     return (
-        <section id='login'>
+        <section id='login' >
             <section class="bg-gray-100 min-h-screen flex box-border justify-center items-center">
                 <div class="bg-[#dfa674] rounded-2xl flex max-w-3xl p-5 items-center" style={{ backgroundColor: 'rgb(239, 224, 226)' }}>
                     <div class="md:w-1/2 px-8">

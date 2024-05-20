@@ -22,7 +22,7 @@ export default function App() {
     if(responseData.success) {
       dispatch(setUserDetails(responseData))
     }
-    // console.log('responseData: ', responseData);
+    // 
 
   }
   useEffect(() => {
@@ -36,7 +36,9 @@ export default function App() {
     }} >
     <ToastContainer />
       <Header />
+      <main className='min-h-[calc(100vh-380px)]'>
       <Outlet />
+      </main>
       <Footer />
       </Context.Provider>
     </>

@@ -4,7 +4,7 @@ async function userLogout(req, res) {
 
         res.json({
             message: "Logout successfully",
-            data: token,
+            data: [],
             success: true,
             error: false,
             data: []

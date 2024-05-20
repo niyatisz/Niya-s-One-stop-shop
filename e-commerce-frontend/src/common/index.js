@@ -16,6 +16,18 @@ const summaryApi = {
     logout: {
         url : `${backendDomain}/api/logout`,
         method : 'GET'
+    },
+    allUser : {
+        url : `${backendDomain}/api/all-users`,
+        method : 'GET'
+    },
+    updateUser : {
+        url : `${backendDomain}/api/update-user`,
+        method : 'POST'
+    },
+    deleteUser : {
+        url : `${backendDomain}/api/delete-user`,
+        method : 'DELETE'
     }
 }
 export default summaryApi

@@ -1,15 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import logo from '../assets/logo_niya1.png'
 import { FaSearch } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import summaryApi from '../common';
 import { toast } from 'react-toastify';
+import { setUserDetails } from '../store/userSlice';
+import Role from '../common/role';
 
 const Header = () => {
+    const [menuDisplay, setMenuDisplay] = useState(false)
     const user = useSelector((state) => state?.user?.user)
+    const dispatch = useDispatch();
 
     const handleLogout = async () => {
         const fetchData = await fetch(summaryApi.logout.url, {
@@ -21,6 +25,7 @@ const Header = () => {
 
         if (responseData.success) {
             toast.success(responseData.message)
+            dispatch(setUserDetails(null))
         }
         if (responseData.error) {
             toast.error(responseData.message)
@@ -40,9 +45,23 @@ const Header = () => {
                         <FaSearch style={{ color: 'rgb(56, 45, 94)' }} />
                     </div>
                 </div>
-                <div className='flex items-center gap-4'>
-                    <div className='text-3xl cursor-pointer'>
-                        {user?.data?.image ? <img src={user.data.image} alt='user' className='w-10 h-10 rounded-full' /> : <FaUserCircle style={{ color: 'rgb(56, 45, 94)' }} />}
+                <div className='flex items-center gap-7'>
+                    <div className='relative flex justify-center'>
+                        {user?.data?._id &&
+                            <div className='text-3xl cursor-pointer relative flex justify-center' onClick={() => setMenuDisplay(prev => !prev)}>
+                                {user?.data?.image ? <img src={user.data.image} alt='user' className='w-10 h-10 rounded-full' /> : <FaUserCircle style={{ color: 'rgb(56, 45, 94)' }} />}
+                            </div>
+                        }
+                        {menuDisplay &&
+                            <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block' style={{ backgroundColor: 'rgb(239, 224, 226)', color: 'rgb(56, 45, 94)' }}>
+                                {user?.data?.role === Role.ADMIN && (
+                                    <nav>
+                                        <Link to={'admin-panel'} className='cursor-pointer hover:text-blue-500' onClick={() => setMenuDisplay(prev => !prev)}>Admin Panel</Link>
+                                    </nav>
+                                )}
+
+                            </div>
+                        }
                     </div>
                     <div className='text-3xl cursor-pointer relative'>
                         <span><FaCartShopping style={{ color: 'rgb(56, 45, 94)' }} /></span>

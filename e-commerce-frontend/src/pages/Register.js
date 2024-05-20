@@ -13,7 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 const Register = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [photo, setPhoto] = useState('');
-    console.log('photo: ', photo);
+    
     const navigate = useNavigate();
     
     const {register, getValues, control, handleSubmit, formState: {errors}, reset} = useForm();
@@ -34,13 +34,13 @@ const Register = () => {
               
             }
           })
-          console.log(photo)
+          
         
     };
     const onFormSubmit = async (data) => {
         try {
             data.image = photo?.image
-            console.log('photo.image: ', photo.image);
+            
             const res = await fetch(summaryApi.register.url, {
                 method: summaryApi.register.method,
                 headers: {

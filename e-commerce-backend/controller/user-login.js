@@ -13,7 +13,7 @@ async function userLoginController(req, res) {
             throw new Error("User doesn't Exists");
         }
         const checkPassword = await bcrypt.compare(password, user.password)
-        console.log('checkPassword: ', checkPassword);
+        
         if (checkPassword) {
             const tokenData = {
                 _id: user._id, 
