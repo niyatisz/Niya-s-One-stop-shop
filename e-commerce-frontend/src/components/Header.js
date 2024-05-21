@@ -56,7 +56,7 @@ const Header = () => {
                             <div className='absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded hidden md:block' style={{ backgroundColor: 'rgb(239, 224, 226)', color: 'rgb(56, 45, 94)' }}>
                                 {user?.data?.role === Role.ADMIN && (
                                     <nav>
-                                        <Link to={'admin-panel'} className='cursor-pointer hover:text-blue-500' onClick={() => setMenuDisplay(prev => !prev)}>Admin Panel</Link>
+                                        <Link to={'admin-panel/all-products'} className='cursor-pointer hover:text-blue-500' onClick={() => setMenuDisplay(prev => !prev)}>Admin Panel</Link>
                                     </nav>
                                 )}
 

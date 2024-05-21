@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import summaryApi from '../common'
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import ChangeUserRole from '../components/ChangeUserRole';
-import { toast } from 'react-toastify';
 
 const AllUsers = () => {
     const [allUser, setAllUser] = useState([])
@@ -20,7 +19,6 @@ const AllUsers = () => {
             credentials: 'include',
         })
         const data = await res.json()
-        console.log('data: ', data);
 
         setAllUser(data)
     }
@@ -29,20 +27,24 @@ const AllUsers = () => {
         getAllUser()
     }, [])
 
-    const deleteUser = async () => {
-        const res = await fetch(summaryApi.deleteUser.url, {
-            method: summaryApi.deleteUser.method,
-            credentials: 'include',
-        })
-        const data = await res.json()
-        console.log('data: ', data);
-        if (data.success) {
-            toast.success(data.message)
-        }
-        if (data.error) {
-            toast.error(data.message)
-        }
-    }
+    // const deleteUser = async (_id) => {
+    //     const res = await fetch(summaryApi.deleteUser.url, {
+    //         method: summaryApi.deleteUser.method,
+    //         credentials: 'include',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify({ userId: _id })
+    //     });
+    //     const data = await res.json();
+    //     
+    //     if (data.success) {
+    //         toast.success(data.message);
+    //         setAllUser(prevUsers => prevUsers.filter(user => user._id !== _id));
+    //     } else if (data.error) {
+    //         toast.error(data.message);
+    //     }
+    // };
 
         return (
             <div className="p-8 bg-white rounded-lg shadow-md" style={{ backgroundColor: 'rgb(239, 224, 226)' }}>
@@ -78,7 +80,7 @@ const AllUsers = () => {
                                             setUpdatedUserData(user)
                                             setOpenUpdateRole(true)
                                         }}><AiFillEdit /></button>
-                                        <button className='rounded-full p-2 mx-auto' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }} onClick={deleteUser}><AiFillDelete /></button>
+                                        <button className='rounded-full p-2 mx-auto' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }}><AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}

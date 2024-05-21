@@ -8,7 +8,7 @@ const authToken = require('../middleware/authToken')
 const userLogout = require('../controller/user-logout')
 const allUsers = require('../controller/all-users')
 const updateUsers = require('../controller/update-user')
-const deleteUser = require('../controller/delete-user')
+// const deleteUser = require('../controller/delete-user')
 
 router.post('/register',userRegistrationController)
 router.post('/login',userLoginController)
@@ -18,6 +18,6 @@ router.get('/logout',userLogout)
 //admin panel
 router.get('/all-users',authToken,allUsers)
 router.post('/update-user',authToken,updateUsers)
-router.delete('/delete-user', authToken,deleteUser)
+// router.delete('/delete-user', authToken,deleteUser)
 
 module.exports = router
