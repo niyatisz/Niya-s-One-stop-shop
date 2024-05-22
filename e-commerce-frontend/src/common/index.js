@@ -28,6 +28,22 @@ const summaryApi = {
     deleteUser : {
         url : `${backendDomain}/api/delete-user`,
         method : 'DELETE'
+    },
+    uploadProduct : {
+        url : `${backendDomain}/api/upload-product`,
+        method : 'POST'
+    },
+    getAllProducts : {
+        url : `${backendDomain}/api/get-all-products`,
+        method : 'GET'
+    },
+    updateProduct : {
+        url : `${backendDomain}/api/update-product`,
+        method : 'POST'
+    },
+    deleteProduct : {
+        url : `${backendDomain}/api/delete-product`,
+        method : 'DELETE'
     }
 }
 export default summaryApi

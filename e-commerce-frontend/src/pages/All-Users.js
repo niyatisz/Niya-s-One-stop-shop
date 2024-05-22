@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import summaryApi from '../common'
 import { AiFillDelete, AiFillEdit } from "react-icons/ai";
 import ChangeUserRole from '../components/ChangeUserRole';
+import { toast } from 'react-toastify';
 
 const AllUsers = () => {
     const [allUser, setAllUser] = useState([])
@@ -27,24 +28,31 @@ const AllUsers = () => {
         getAllUser()
     }, [])
 
-    // const deleteUser = async (_id) => {
-    //     const res = await fetch(summaryApi.deleteUser.url, {
-    //         method: summaryApi.deleteUser.method,
-    //         credentials: 'include',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ userId: _id })
-    //     });
-    //     const data = await res.json();
-    //     
-    //     if (data.success) {
-    //         toast.success(data.message);
-    //         setAllUser(prevUsers => prevUsers.filter(user => user._id !== _id));
-    //     } else if (data.error) {
-    //         toast.error(data.message);
-    //     }
-    // };
+    const handleDeleteUser = async (userId) => {
+        const confirmed = window.confirm("Are you sure you want to delete this product?");
+        if (!confirmed) return;
+    
+        try {
+          const res = await fetch(summaryApi.deleteUser.url, {
+            method: summaryApi.deleteUser.method,
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ _id: userId})
+          });
+    
+          const responseData = await res.json();
+          if (responseData.success) {
+            toast.success(responseData.message);
+            setAllUser(allUser.filter(user => user.id !== userId));
+          } else {
+            toast.error(responseData.message);
+          }
+        } catch (error) {
+        //   toast.error('An error occurred while deleting the product.');
+        }
+      };
 
         return (
             <div className="p-8 bg-white rounded-lg shadow-md" style={{ backgroundColor: 'rgb(239, 224, 226)' }}>
@@ -69,6 +77,7 @@ const AllUsers = () => {
                         </thead>
                         <tbody>
                             {allUser?.data?.map((user, index) => (
+                                
                                 <tr key={index} >
                                     <td className="py-2 px-4 border-b border-gray-200 text-sm text-gray-900 text-center" style={{ borderBottom: '1px solid rgb(56, 45, 94)', color: 'rgb(56, 45, 94)' }}>{index + 1}</td>
                                     <td className="py-2 px-4 border-b border-gray-200 text-sm text-gray-900 text-center" style={{ borderBottom: '1px solid rgb(56, 45, 94)', color: 'rgb(56, 45, 94)' }}>{user.name}</td>
@@ -80,7 +89,7 @@ const AllUsers = () => {
                                             setUpdatedUserData(user)
                                             setOpenUpdateRole(true)
                                         }}><AiFillEdit /></button>
-                                        <button className='rounded-full p-2 mx-auto' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }}><AiFillDelete /></button>
+                                        <button className='rounded-full p-2 mx-auto' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }} onClick={()=> {handleDeleteUser(user._id)}}><AiFillDelete /></button>
                                     </td>
                                 </tr>
                             ))}
