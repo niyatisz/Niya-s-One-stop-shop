@@ -1,8 +1,7 @@
-const uploadProductPermission = require("../helpers/permission");
-const productModel = require("../models/product-model");
+const uploadProductPermission = require("../../helpers/permission");
+const productModel = require("../../models/product-model");
 
-async function deleteProductController(req,res) {
-    console.log('req: ', req);
+async function updateProductController(req,res) {
     try {
         const sessionUserId = req.userId
         if(!uploadProductPermission(sessionUserId)) {
@@ -12,19 +11,18 @@ async function deleteProductController(req,res) {
                 success: false,
             });
         }
-        const {_id, resBody} = req.body
+        const {_id, ...resBody} = req.body
 
-        const deleteProduct = await productModel.findByIdAndDelete(_id, resBody)
+        const updateProduct = await productModel.findByIdAndUpdate(_id, resBody)
 
         res.status(200).json({
-            message: "Product Deleted Successfully",
-            data: deleteProduct,
+            message: "Product Updated Successfully",
+            data: updateProduct,
             error: false,
             success: true
         })
-        
     } catch (error) {
-        res.status(400).json({
+        res.status(500).json({
             message: error.message || error,
             error: true,
             success: false,
@@ -32,4 +30,4 @@ async function deleteProductController(req,res) {
     }
 }
 
-module.exports = deleteProductController
+module.exports = updateProductController

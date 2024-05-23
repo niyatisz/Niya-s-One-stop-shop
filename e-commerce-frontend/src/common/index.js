@@ -44,6 +44,14 @@ const summaryApi = {
     deleteProduct : {
         url : `${backendDomain}/api/delete-product`,
         method : 'DELETE'
+    },
+    getCategoryProduct : {
+        url : `${backendDomain}/api/get-category-product`,
+        method : 'GET'
+    },
+    getCategoryWiseProduct : {
+        url : `${backendDomain}/api/get-category-wise-product`,
+        method : 'GET'
     }
 }
 export default summaryApi

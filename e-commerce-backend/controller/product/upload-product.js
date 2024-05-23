@@ -1,9 +1,11 @@
-const uploadProductPermission = require("../helpers/permission");
-const productModel = require("../models/product-model");
+const uploadProductPermission = require("../../helpers/permission");
+const productModel = require("../../models/product-model");
 
-async function updateProductController(req,res) {
+async function uploadProductController(req, res) {
     try {
+
         const sessionUserId = req.userId
+        
         if(!uploadProductPermission(sessionUserId)) {
             res.status(400).json({
                 message: "Permission denied",
@@ -11,18 +13,18 @@ async function updateProductController(req,res) {
                 success: false,
             });
         }
-        const {_id, ...resBody} = req.body
-
-        const updateProduct = await productModel.findByIdAndUpdate(_id, resBody)
+        const uploadProduct = await productModel(req.body)
+        const saveProduct = await uploadProduct.save()
 
         res.status(200).json({
-            message: "Product Updated Successfully",
-            data: updateProduct,
+            message: "Product Uploaded Successfully",
+            data: saveProduct,
             error: false,
             success: true
         })
+        
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             message: error.message || error,
             error: true,
             success: false,
@@ -30,4 +32,4 @@ async function updateProductController(req,res) {
     }
 }
 
-module.exports = updateProductController
+module.exports = uploadProductController

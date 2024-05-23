@@ -16,7 +16,7 @@ const UploadProduct = ({ onClose }) => {
     const [fullScreenImage, setFullScreenImage] = useState("");
     const [OpenFullScreenImage, setOpenFullScreenImage] = useState(false);
 
-    const { register, getValues, handleSubmit, formState: { errors }, reset } = useForm();
+    const { register, handleSubmit, reset } = useForm();
     
     const fetchAllProduct = async () => {
         const res = await fetch(summaryApi.getAllProducts.url, {

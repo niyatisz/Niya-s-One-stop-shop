@@ -4,6 +4,7 @@ import summaryApi from '../common';
 import { toast } from 'react-toastify';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import EditProductModel from '../components/EditProductModel';
+import displayINRCurrency from '../helpers/DisplayCurrency';
 
 const AllProducts = () => {
   const [openUploadProduct, setOpenUploadProduct] = useState(false);
@@ -81,7 +82,7 @@ const AllProducts = () => {
           return (
             <div className='flex items-center bg-white p-4 rounded-lg shadow-md' key={index} >
               <div className="w-24 h-24 flex-shrink-0">
-                <img src={item.productImage[0]} alt='product' className='w-full h-full object-cover rounded-md' />
+                <img src={item.productImage[0]} alt='product' className='object-cover h-full rounded-md' />
               </div>
               <div className='ml-4 overflow-auto' >
                 <h2 className='text-lg font-semibold text-gray-800' style={{ color: 'rgb(56, 45, 94)' }}>Product Name: {item.productName}</h2>
@@ -96,10 +97,10 @@ const AllProducts = () => {
                   <option>{item.category}</option>
                 </select>
 
-                <p className='text-sm text-gray-500 mt-2' style={{ color: 'rgb(56, 45, 94)' }}>Description: {item.description}</p>
+                <p className='text-sm text-gray-500 mt-2 text-ellipsis line-clamp-3' style={{ color: 'rgb(56, 45, 94)' }}>Description: {item.description}</p>
                 <div className="mt-2">
-                  <p className='text-sm text-gray-700' style={{ color: 'rgb(56, 45, 94)' }}>Price: ${item.price}</p>
-                  <p className='text-sm text-gray-700' style={{ color: 'rgb(56, 45, 94)' }}>Selling Price: ${item.sellingPrice}</p>
+                  <p className='text-sm text-gray-700' style={{ color: 'rgb(56, 45, 94)' }}>Price: {displayINRCurrency(item.price)}</p>
+                  <p className='text-sm text-gray-700' style={{ color: 'rgb(56, 45, 94)' }}>Selling Price: {displayINRCurrency(item.sellingPrice)}</p>
                 </div>
                 <div className='mt-2'>
                   <button className='rounded-md p-2' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }} onClick={() => { handleEditClick(item) }}><AiFillEdit /></button>

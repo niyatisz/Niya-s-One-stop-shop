@@ -222,7 +222,7 @@ const EditProductModel = ({ initialData, onClose }) => {
     }, [initialData, reset]);
 
     const onFormSubmit = async (data) => {
-        data.productImage = itemImage;
+        data.productImage = itemImage.url;
 
         try {
             const res = await fetch(summaryApi.updateProduct.url, {
@@ -359,7 +359,7 @@ const EditProductModel = ({ initialData, onClose }) => {
                                 className="px-4 py-2 bg-gray-500 text-white rounded-md hover:bg-gray-600"
                                     style={{ backgroundColor: 'rgb(56, 45, 94)' }}
                             >
-                                Upload Product
+                                Edit Product
                             </button>
                         </div>
                     </div>
