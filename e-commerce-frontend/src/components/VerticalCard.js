@@ -47,9 +47,10 @@ const PrevArrow = ({ onClick }) => (
     </svg>
 );
 
-const HorizontalCard = ({ category }) => {
+const VerticalCard = ({ category }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
+
     const {getProductCount} = useContext(Context)
 
 
@@ -89,7 +90,7 @@ const HorizontalCard = ({ category }) => {
     const sliderSettings = {
         infinite: true,
         speed: 500,
-        slidesToShow: 6,
+        slidesToShow: 7,
         slidesToScroll: 1,
         nextArrow: <NextArrow />,
         prevArrow: <PrevArrow />,
@@ -97,15 +98,16 @@ const HorizontalCard = ({ category }) => {
             {
                 breakpoint: 1024,
                 settings: {
-                    slidesToShow: 2,
+                    slidesToShow: 3,
                     slidesToScroll: 1,
                     infinite: true,
+                    dots: true
                 }
             },
             {
                 breakpoint: 600,
                 settings: {
-                    slidesToShow: 1,
+                    slidesToShow: 2,
                     slidesToScroll: 1,
                     initialSlide: 1
                 }
@@ -120,7 +122,7 @@ const HorizontalCard = ({ category }) => {
         ]
     };
 
-    const loadingList = new Array(6).fill(null);
+    const loadingList = new Array(7).fill(null);
 
     return (
         <div className="p-5">
@@ -129,50 +131,46 @@ const HorizontalCard = ({ category }) => {
                 {loading ? (
                     loadingList.map((_, index) => (
                         <div key={index} className="px-2 pb-2">
-                            <div className="bg-white p-4 rounded-md shadow-md h-full flex flex-row flex-wrap animate-pulse">
-                                <div className="w-24 h-24 flex-shrink-0 bg-slate-200 rounded-md mb-4"></div>
-                                <div className='ml-4 flex-1'>
-                                    <h3 className="text-lg font-semibold text-gray-800 bg-slate-200 h-6 w-3/4 rounded mb-2"></h3>
-                                    <p className='text-sm text-gray-600 bg-slate-200 h-4 w-1/2 rounded mb-2'></p>
-                                    <p className='text-red-600 font-medium bg-slate-200 h-4 w-1/4 rounded mb-2'></p>
-                                    <p className='text-slate-500 line-through bg-slate-200 h-4 w-1/4 rounded mb-4'></p>
-                                    <button
-                                        className="p-2 mt-1 bg-slate-200 rounded-md h-8 w-20"
-                                    ></button>
+                            <div className="bg-white p-4 rounded-lg shadow-md h-full flex flex-col">
+                                <div className="bg-slate-200 h-48 p-4 flex justify-center items-center animate-pulse">
+                                </div>
+                                <div className="p-4 grid gap-3">
+                                    <h3 className="text-sm font-semibold text-center line-clamp-1 text-black p-1 py-2 animate-pulse rounded-full bg-slate-200"></h3>
+                                    <div className="flex justify-center gap-2 mt-2">
+                                        <p className="text-red-600 font-medium p-1 animate-pulse rounded-full bg-slate-200 w-full py-2"></p>
+                                        <p className="text-slate-500 line-through p-1 animate-pulse rounded-full bg-slate-200 w-full py-2"></p>
+                                    </div>
+                                    <button className="p-2 mt-2 text-white rounded-md bg-slate-200 animate-pulse text-sm mx-auto"></button>
                                 </div>
                             </div>
                         </div>
                     ))
                 ) : (
-                    products.map(product => {
-                        
-                        return (
-                            <Link to={'/product/'+product._id} key={product._id} className="px-2 pb-2">
-                                <div className="bg-white p-4 rounded-md shadow-md h-full flex-row md:flex-wrap lg:flex">
-                                    <div className="w-24 h-24 flex-shrink-0">
-                                        <img src={product.productImage[0]} alt={product.productName} className="object-cover h-full w-full rounded-md mb-4" />
-                                    </div>
-                                    <div className='ml-4 overflow-auto'>
-                                        <h3 className="text-lg font-semibold text-gray-800 line-clamp-1" style={{ color: 'rgb(56, 45, 94)' }}>{product.productName}</h3>
-                                        <p className='text-sm text-gray-600' style={{ color: 'rgb(56, 45, 94)' }}>Brand: {product.brandName}</p>
-                                        <p className='text-red-600 font-medium'>{displayINRCurrency(product?.sellingPrice)}</p>
-                                        <p className='text-slate-500 line-through'>{displayINRCurrency(product?.price)}</p>
-                                        <button
-                                            className="p-2 mt-1 text-white rounded-md hover:bg-gray-600 text-sm w-30"
-                                            style={{ backgroundColor: 'rgb(56, 45, 94)' }}
-                                            onClick={(e) => handleAddToCart(e,product?._id)}
-                                        >
-                                            Add to cart
-                                        </button>
-                                    </div>
+                    products.map(product => (
+                        <Link to={'product/'+product._id} key={product._id} className="px-2 pb-2">
+                            <div className="bg-white p-4 rounded-lg shadow-md h-full flex flex-col">
+                                <div className="bg-white h-48 p-4 flex justify-center items-center">
+                                    <img src={product?.productImage[0]} alt={product?.productName} className="object-scale-down h-full hover:scale-110 transition-all mix-blend-multiply" />
                                 </div>
-                            </Link>
-                        )
-                    })
+                                <h3 className="text-sm font-semibold text-center line-clamp-1">{product.productName}</h3>
+                                <div className="flex justify-center gap-2 mt-2 md:flex-wrap">
+                                    <p className="text-red-600 font-medium">{displayINRCurrency(product?.sellingPrice)}</p>
+                                    <p className="text-slate-500 line-through">{displayINRCurrency(product?.price)}</p>
+                                </div>
+                                <button
+                                    className="p-2 mt-2 text-white rounded-md hover:bg-gray-600 text-sm mx-auto"
+                                    style={{ backgroundColor: 'rgb(56, 45, 94)' }}
+                                    onClick={(e) => handleAddToCart(e,product._id)}
+                                >
+                                    Add to cart
+                                </button>
+                            </div>
+                        </Link>
+                    ))
                 )}
             </Slider>
         </div>
     );
 };
 
-export default HorizontalCard;
+export default VerticalCard;

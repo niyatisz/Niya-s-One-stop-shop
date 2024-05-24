@@ -13,7 +13,7 @@ const Login = () => {
     const [showPassword, setShowPassword] = useState(false);
     const {register, getValues, control, handleSubmit, formState: {errors}, reset} = useForm();
     const navigate = useNavigate();
-    const {fetchUserDetails} = useContext(Context)
+    const {fetchUserDetails, getProductCount} = useContext(Context)
 
     const togglePasswordVisibility = () => {
         setShowPassword(!showPassword);
@@ -34,7 +34,8 @@ const Login = () => {
             if (responseData.success) {
                 toast.success(responseData.message); 
                 navigate('/')
-                fetchUserDetails()            
+                fetchUserDetails()
+                getProductCount()            
             } 
             else {
                 toast.error(responseData.message);

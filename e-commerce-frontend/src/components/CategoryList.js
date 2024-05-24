@@ -24,9 +24,6 @@ const CategoryList = () => {
         <div className='flex justify-center p-5 mt-5 mx-5 rounded-md shadow-2xl'style={{ backgroundColor: 'rgb(239, 224, 226)', color: 'rgb(56, 45, 94)' }}>
             <div className='flex space-x-8 overflow-x-auto scrollbar-none'>
                 {loading ? (
-                    // <div className="w-16 h-16 sm:w-20 sm:h-20 md:w-20 md:h-20 lg:w-20 lg:h-20 xl:w-20 xl:h-20 rounded-md bg-white p-2 overflow-hidden">
-                        
-                    // </div>
                     categoryLoading.map((el,index)=>{
                         return (
                             
