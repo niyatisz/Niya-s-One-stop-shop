@@ -30,7 +30,7 @@ const ProductDetails = () => {
   })
   const [zoomImage, setZoomImage] = useState(false)
 
-  const { fetchUserAddToCart } = useContext(Context)
+  const { getProductCount } = useContext(Context)
 
   const navigate = useNavigate()
 
@@ -53,7 +53,7 @@ const ProductDetails = () => {
 
   }
 
-  console.log("data", data)
+  
 
   useEffect(() => {
     fetchProductDetails()
@@ -66,7 +66,7 @@ const ProductDetails = () => {
   const handleZoomImage = useCallback((e) => {
     setZoomImage(true)
     const { left, top, width, height } = e.target.getBoundingClientRect()
-    console.log("coordinate", left, top, width, height)
+    
 
     const x = (e.clientX - left) / width
     const y = (e.clientY - top) / height
@@ -84,12 +84,12 @@ const ProductDetails = () => {
 
   const handleAddToCart = async (e, id) => {
     await addToCart(e, id)
-    fetchUserAddToCart()
+    getProductCount()
   }
 
   const handleBuyProduct = async (e, id) => {
     await addToCart(e, id)
-    fetchUserAddToCart()
+    getProductCount()
     navigate("/cart")
 
   }

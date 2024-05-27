@@ -9,15 +9,17 @@ const Home = () => {
     <div>
       <CategoryList />
       <BannerProduct />
-      <HorizontalCard category={"airpodes"}/>
+      <HorizontalCard category={"airpodes"} heading={"Top's Airpodes"}/>
+      <HorizontalCard category={"watches"} heading={"Popular's Watches"}/>
 
-      <HorizontalCard category={"watches"} />
-
-      <VerticalCard category={"mobiles"} />
-
-      <VerticalCard category={"refrigerator"} />
-      
-      <VerticalCard category={"televisions"} />
+      <VerticalCard category={"mobiles"} heading={"Mobiles"}/>
+      <VerticalCard category={"Mouse"} heading={"Mouse"}/>
+      <VerticalCard category={"televisions"} heading={"Televisions"}/>
+      <VerticalCard category={"camera"} heading={"Camera & Photography"}/>
+      <VerticalCard category={"earphones"} heading={"Wired Earphones"}/>
+      <VerticalCard category={"speakers"} heading={"Bluetooth Speakers"}/>
+      <VerticalCard category={"refrigerator"} heading={"Refrigerator"}/>
+      <VerticalCard category={"trimmers"} heading={"Trimmers"}/>
     </div>
   )
 }

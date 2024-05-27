@@ -1,27 +1,26 @@
 import React from 'react'
+import logo from '../assets/logo_niya1.png'
+import { Link } from 'react-router-dom';
 const Footer = () => {
   const LINKS = [
     {
       title: "Product",
-      items: ["Overview", "Features", "Solutions", "Tutorials"],
+      items: ["Home", "Categories", "Cart"],
     },
     {
       title: "Company",
-      items: ["About us", "Careers", "Press", "News"],
-    },
-    {
-      title: "Resource",
-      items: ["Blog", "Newsletter", "Events", "Help center"],
+      items: ["About us", "Contact Us", "Feedback"],
     },
   ];
   const currentYear = new Date().getFullYear();
   return (
   
-        <footer className="relative w-full" style={{backgroundColor: 'rgb(239, 224, 226)', color: 'rgb(56, 45, 94)'}}>
+        <footer className="relative w-full cursor-pointer" style={{backgroundColor: 'rgb(239, 224, 226)', color: 'rgb(56, 45, 94)'}}>
           <div className="mx-auto w-full max-w-7xl px-8">
             <div className="grid grid-cols-1 justify-between gap-4 md:grid-cols-2">
               <p className="mb-6 font-bold mt-3">
                 Niya's One, Stop Shop!
+              <img src={logo} alt='logo' width={"190"}   />
               </p>
               <div className="grid grid-cols-3 justify-between gap-4 mt-3" >
                 {LINKS.map(({ title, items }) => (
@@ -36,15 +35,15 @@ const Footer = () => {
                     </p>
                     {items.map((link) => (
                       <li key={link}>
-                        <p
+                        <Link
                           as="a"
-                          href="#"
+                          to={link === "Home" ? "/" : link === "Cart" ? `/cart` : `/`}
                           // color="gray"
                           className="py-1.5 font-normal transition-colors hover:text-blue-gray-900"
-                          style={{color: 'rgb(56, 45, 94)'}}
+                          style={{color: 'rgb(56, 45, 94)', marginBottom: "1px"}}
                         >
                           {link}
-                        </p>
+                        </Link>
                       </li>
                     ))}
                   </ul>
@@ -56,7 +55,7 @@ const Footer = () => {
                 variant="small"
                 className="mb-4 text-center font-normal text-blue-gray-900 md:mb-0"
               >
-                &copy; {currentYear} <a href="https://material-tailwind.com/">Material Tailwind</a>. All
+                &copy; {currentYear} <a href="https://material-tailwind.com/">Niya's One, Stop Shop</a>. All
                 Rights Reserved.
               </p>
               <div className="flex gap-4 text-blue-gray-900 sm:justify-center">

@@ -3,7 +3,7 @@ import logo from '../assets/logo_niya1.png'
 import { FaSearch } from "react-icons/fa";
 import { FaUserCircle } from "react-icons/fa";
 import { FaCartShopping } from "react-icons/fa6";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import summaryApi from '../common';
 import { toast } from 'react-toastify';
@@ -15,9 +15,9 @@ const Header = () => {
     const [menuDisplay, setMenuDisplay] = useState(false)
     const user = useSelector((state) => state?.user?.user)
     const dispatch = useDispatch();
-
+    const navigate = useNavigate();
     const cartContext = useContext(Context)
-    
+
 
     const handleLogout = async () => {
         const fetchData = await fetch(summaryApi.logout.url, {
@@ -35,8 +35,18 @@ const Header = () => {
             toast.error(responseData.message)
         }
     }
+
+    const handleSearch = (e) => {
+        const { value } = e.target
+
+        if (value) {
+            navigate(`/search?q=${value}`)
+        } else {
+            navigate('/search')
+        }
+    }
     return (
-        <div className='h-20 shadow-md fixed w-full z-40' style={{ backgroundColor: 'rgb(239, 224, 226)' }}>
+        <div className='h-20 shadow-md fixed w-full z-40 cursor-pointer' style={{ backgroundColor: 'rgb(239, 224, 226)' }}>
             <div className='h-full mx-auto container flex items-center px-4 justify-between'>
                 <div>
                     <Link to={"/"} >
@@ -44,8 +54,8 @@ const Header = () => {
                     </Link>
                 </div>
                 <div className='hidden lg:flex items-center w-full justify-between max-w-sm border rounded-md focus-within:shadow-xl pl-2' style={{ backgroundColor: 'white' }}>
-                    <input type='text' placeholder='Search here...' style={{ backgroundColor: 'white' }} className='w-full outline-none' />
-                    <div className='text-lg min-w-[50px] h-8 flex items-center justify-center rounded-r-full text-white'>
+                    <input type='text' placeholder='Search here...' style={{ backgroundColor: 'white' }} className='w-full outline-none' onChange={(e)=> handleSearch(e)} />
+                    <div className='text-lg min-w-[50px] h-8 flex items-center justify-center rounded-r-full text-white' >
                         <FaSearch style={{ color: 'rgb(56, 45, 94)' }} />
                     </div>
                 </div>
@@ -79,7 +89,7 @@ const Header = () => {
                     )}
                     <div>
                         {user?.data?._id ? <button onClick={handleLogout} className='px-3 py-1 rounded-md' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }}>Logout</button> : (<Link to={"/login"}>
-                            <button className='px-3 py-1 rounded-full' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }}>Login</button>
+                            <button className='px-3 py-1 rounded-md' style={{ backgroundColor: 'rgb(56, 45, 94)', color: 'rgb(239, 224, 226)' }}>Login</button>
                         </Link>)}
 
                     </div>

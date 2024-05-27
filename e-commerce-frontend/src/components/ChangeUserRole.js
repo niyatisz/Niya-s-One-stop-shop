@@ -9,7 +9,7 @@ const ChangeUserRole = ({ name, email, role, onClose, userId, callFunction }) =>
 
   const handleChange = (event) => {
       setUserRole(event.target.value)
-      console.log('event.target.value: ', event.target.value);
+      
   }
 
   const updateUserRole = async() => {
@@ -25,7 +25,7 @@ const ChangeUserRole = ({ name, email, role, onClose, userId, callFunction }) =>
       })
     })
     const updateRole = await getUpdateUserRole.json();
-    console.log('updateRole: ', updateRole);
+    
     if(updateRole.success) {
       toast.success(updateRole.message);
       onClose()

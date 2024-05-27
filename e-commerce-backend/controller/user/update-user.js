@@ -3,8 +3,8 @@ const userModel = require("../../models/user-model");
 async function updateUsers(req,res) {
     try {
         const sessionUser = req.userId
-        console.log('req.userId: ', req.userId);
-        console.log('sessionUser: ', sessionUser);
+        
+        
         const {userId, name, email, role} = req.body
         const payload = {
             ...(email && {email: email}),
@@ -13,7 +13,7 @@ async function updateUsers(req,res) {
         }
 
         const user = await userModel.findById(sessionUser)
-        console.log(user.role)
+        
         const updateUser = await userModel.findByIdAndUpdate(userId, payload)
 
         res.status(200).json({

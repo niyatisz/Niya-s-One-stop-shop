@@ -19,11 +19,16 @@ const getProductDetails = require('../controller/product/get-product-details')
 const addToCartController = require('../controller/user/add-to-cart')
 const productCountController = require('../controller/user/product-count')
 const addToCartProductView = require('../controller/user/add-to-cart-product-view')
+const updateAddToCartProduct = require('../controller/user/update-add-to-cart-product')
+const deleteCartProduct = require('../controller/user/delete-cart-product')
+const searchProduct = require('../controller/product/search-product')
+const forgotPasswordController = require('../controller/user/forgot-password')
 
 router.post('/register',userRegistrationController)
 router.post('/login',userLoginController)
 router.get('/user-details',authToken,userDetailsController)
 router.get('/logout',userLogout)
+router.post('/forgot-password',forgotPasswordController)
 
 //admin panel
 router.get('/all-users',authToken,allUsers)
@@ -38,11 +43,15 @@ router.delete('/delete-product', authToken,deleteProductController)
 router.get('/get-category-product',getCategoryProduct)
 router.get('/get-category-wise-product/:category', getCategoryWiseProduct)
 router.post('/product-details', getProductDetails)
+router.get('/search-product',searchProduct)
 
 //user
 router.post('/add-to-cart',authToken,addToCartController)
 router.get('/product-count',authToken,productCountController)
 router.get('/view-cart',authToken,addToCartProductView)
+router.post('/update-cart-product',authToken,updateAddToCartProduct)
+router.delete('/delete-cart-product',authToken,deleteCartProduct)
+
 
 
 module.exports = router

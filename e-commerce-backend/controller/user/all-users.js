@@ -1,7 +1,7 @@
 const userModel = require("../../models/user-model");
 
 async function allUsers(req,res){
-    console.log('req: ', req);
+    
     try {
         const allUsers = await userModel.find()
         res.status(200).json({

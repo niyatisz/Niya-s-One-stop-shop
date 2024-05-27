@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import addToCart from '../helpers/addToCart';
 import Context from '../context';
 
-const CategoryWiseProductDisplay = ({ category }) => {
+const CategoryWiseProductDisplay = ({ category,filter }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
 
@@ -16,6 +16,13 @@ const CategoryWiseProductDisplay = ({ category }) => {
        await addToCart(e,id)
         getProductCount()
     }
+    useEffect(() => {
+        if (filter === 'htl') {
+          setProducts((prevProducts) => [...prevProducts].sort((a, b) => b.sellingPrice - a.sellingPrice));
+        } else if (filter === 'lth') {
+          setProducts((prevProducts) => [...prevProducts].sort((a, b) => a.sellingPrice - b.sellingPrice));
+        }
+      }, [filter]);
 
     const fetchProductsCategoryWise = async (category) => {
         try {
@@ -49,7 +56,7 @@ const CategoryWiseProductDisplay = ({ category }) => {
     return (
         <div className="mt-2">
             <h2 className="text-2xl font-bold mb-5" style={{ color: 'rgb(56, 45, 94)' }}>
-                Recommended Products
+                Products
             </h2>
             {loading ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">

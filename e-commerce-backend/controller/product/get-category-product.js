@@ -3,7 +3,7 @@ const productModel = require("../../models/product-model");
 async function getCategoryProduct(req,res) {
     try {
         const productCategory = await productModel.distinct("category")
-        console.log('productCategory: ', productCategory);
+        
         const productByCategory = []
 
         for(const category of productCategory) {

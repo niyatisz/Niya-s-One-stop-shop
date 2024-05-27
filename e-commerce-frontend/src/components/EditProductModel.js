@@ -14,9 +14,9 @@
 
 
 // const EditProductModel = ({ initialData, onClose }) => {
-//     console.log('initialData: ', initialData);
+//     
 //     const [itemImage, setItemImage] = useState(initialData.productImage || []);
-//     console.log('itemImage: ', itemImage);
+//     
 //     const [fullScreenImage, setFullScreenImage] = useState("");
 //     const [OpenFullScreenImage, setOpenFullScreenImage] = useState(false);
 
@@ -139,7 +139,7 @@
 //                                     {itemImage.length > 0 ? (
 //                                         <div className='flex items-center gap-2'>
 //                                             {itemImage.map((element, index) => {
-//                                                 console.log('element: ', element);
+//                                                 
 //                                                 return (
 //                                                     <div key={index} className='relative'>
 //                                                         <img src={element} alt={`Product ${index}`} className='w-20 h-20 rounded-lg' onClick={() => {
@@ -207,9 +207,9 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const EditProductModel = ({ initialData, onClose }) => {
-    console.log('initialData: ', initialData);
+    
     const [itemImage, setItemImage] = useState(initialData.productImage || []);
-    console.log('itemImage: ', itemImage);
+    
     const [fullScreenImage, setFullScreenImage] = useState("");
     const [OpenFullScreenImage, setOpenFullScreenImage] = useState(false);
 
@@ -322,7 +322,7 @@ const EditProductModel = ({ initialData, onClose }) => {
                             {itemImage.length > 0 ? (
                                 <Slider {...sliderSettings} className="rounded-lg overflow-hidden mb-4">
                                     {itemImage.map((element, index) => {
-                                        console.log('element: ', element);
+                                        
                                         return (
                                             <div key={index} className='relative'>
                                                 <img src={element.url || element} alt={`Product ${index}`} className='w-20 h-20 object-cover' onClick={() => {

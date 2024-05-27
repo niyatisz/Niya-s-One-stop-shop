@@ -47,7 +47,7 @@ const PrevArrow = ({ onClick }) => (
     </svg>
 );
 
-const HorizontalCard = ({ category }) => {
+const HorizontalCard = ({ category, heading }) => {
     const [products, setProducts] = useState([]);
     const [loading, setLoading] = useState(true);
     const {getProductCount} = useContext(Context)
@@ -124,7 +124,7 @@ const HorizontalCard = ({ category }) => {
 
     return (
         <div className="p-5">
-            <h2 className="text-2xl font-bold mb-5" style={{ color: 'rgb(56, 45, 94)' }}>Products in {category}</h2>
+            <h2 className="text-2xl font-bold mb-5" style={{ color: 'rgb(56, 45, 94)' }}>{heading}</h2>
             <Slider {...sliderSettings}>
                 {loading ? (
                     loadingList.map((_, index) => (

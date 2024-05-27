@@ -49,7 +49,7 @@ async function deleteUser(req, res) {
       });
     }
   } catch (error) {
-    console.error('Error deleting user:', error);
+    
     return res.status(500).json({
       message: error.message || error,
       error: true,
