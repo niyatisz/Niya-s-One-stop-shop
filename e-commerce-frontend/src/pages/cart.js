@@ -4,11 +4,16 @@ import Context from '../context';
 import { AiFillDelete } from 'react-icons/ai';
 import displayINRCurrency from '../helpers/DisplayCurrency'
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router-dom';
+import { loadStripe } from '@stripe/stripe-js';
+
 
 const Cart = () => {
     const [data, setData] = useState([])
+    console.log('data: ', data);
     const [loading, setLoading] = useState(false)
     const loadingCart = new Array(4).fill(null)
+    const navigate = useNavigate();
 
     const { getProductCount } = useContext(Context)
 
@@ -87,6 +92,34 @@ const Cart = () => {
           }
       };
 
+      const Pay = async() => {
+        const stripe = await loadStripe("pk_test_51PLNcUSEA6G6NB8g7g9PcG18cJ6Sj4IgXaYI1OmoXTnMYuidZaCv7GXNMm1HSBDWApt2HpkFVp96TB5CpcGtdKLq00bIwUezuc");
+        console.log('stripe: ', stripe);
+
+        const body = {
+            products: data
+        }
+
+        const res = await fetch(summaryApi.createCheckoutSession.url, {
+            method: summaryApi.createCheckoutSession.method,
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(body)
+        })
+           const session = await res.json()
+           console.log('session: ', session);
+
+           const result = stripe.redirectToCheckout({
+               sessionId: session.session
+            })
+            console.log('result: ', result);
+
+           if (result.error) {
+               console.log(result.error.message)
+           }
+      }
+
     return (
         <div className='p-5'>
             <div className='container mx-auto'>
@@ -142,7 +175,7 @@ const Cart = () => {
                                     <p>{displayINRCurrency(totalPrice)}</p>
                                 </div>
                                 <div className='flex justify-center items-center mt-2'>
-                                    <button className="p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 w-full" style={{ backgroundColor: 'rgb(56, 45, 94)' }}>
+                                    <button className="p-2 bg-gray-500 text-white rounded-md hover:bg-gray-600 w-full" style={{ backgroundColor: 'rgb(56, 45, 94)' }} onClick={Pay}>
                                         Buy Now
                                     </button>
                                 </div>

@@ -11,6 +11,9 @@ import CategoryProduct from '../pages/CategoryProduct';
 import ProductDetails from '../pages/ProductDetails';
 import Cart from '../pages/cart';
 import SearchProduct from '../pages/SearchProduct';
+import ResetPassword from '../pages/ResetPassword';
+import PaymentSuccess from '../pages/PaymentSuccess';
+import PaymentRejected from '../pages/PaymentRejected';
 
 
 const router = createBrowserRouter([
@@ -49,6 +52,18 @@ const router = createBrowserRouter([
             {   
                 path: 'search',
                 element: <SearchProduct />
+            },
+            {
+                path: 'reset-password/:id/:token',
+                element: <ResetPassword />
+            },
+            {
+                path: 'pay-success',
+                element: <PaymentSuccess />
+            },
+            {
+                path: 'pay-rejected',
+                element: <PaymentRejected />
             },
             {
                 path: 'admin-panel',

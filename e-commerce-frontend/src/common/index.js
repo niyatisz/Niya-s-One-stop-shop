@@ -84,7 +84,15 @@ const summaryApi = {
     forgotPassword : {
         url : `${backendDomain}/api/forgot-password`,
         method : 'POST'
-    }
+    },
+    resetPassword: {
+        url : `${backendDomain}/api/reset-password`,
+        method : 'POST'
+    },
+    createCheckoutSession: {
+        url: `${backendDomain}/api/create-checkout-session`,
+        method: 'POST'
+    },
 }
 export default summaryApi
 
