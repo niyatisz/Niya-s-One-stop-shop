@@ -25,6 +25,7 @@ const searchProduct = require('../controller/product/search-product')
 const forgotPasswordController = require('../controller/user/forgot-password')
 const resetPassword = require('../controller/user/reset-password')
 const checkoutProduct = require('../controller/user/checkout-product')
+const clearCart = require('../controller/user/clear-cart')
 
 router.post('/register',userRegistrationController)
 router.post('/login',userLoginController)
@@ -54,6 +55,7 @@ router.get('/product-count',authToken,productCountController)
 router.get('/view-cart',authToken,addToCartProductView)
 router.post('/update-cart-product',authToken,updateAddToCartProduct)
 router.delete('/delete-cart-product',authToken,deleteCartProduct)
+router.post('/clear-cart',authToken,clearCart)
 
 
 router.post('/create-checkout-session', checkoutProduct);
