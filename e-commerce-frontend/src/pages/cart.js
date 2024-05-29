@@ -94,7 +94,7 @@ const Cart = () => {
 
       const Pay = async() => {
         const stripe = await loadStripe("pk_test_51PLNcUSEA6G6NB8g7g9PcG18cJ6Sj4IgXaYI1OmoXTnMYuidZaCv7GXNMm1HSBDWApt2HpkFVp96TB5CpcGtdKLq00bIwUezuc");
-        console.log('stripe: ', stripe);
+        
 
         const body = {
             products: data
@@ -108,15 +108,15 @@ const Cart = () => {
             body: JSON.stringify(body)
         })
            const session = await res.json()
-           console.log('session: ', session);
+           
 
            const result = stripe.redirectToCheckout({
                sessionId: session.session
             })
-            console.log('result: ', result);
+            
 
            if (result.error) {
-               console.log(result.error.message)
+               
            }
       }
 

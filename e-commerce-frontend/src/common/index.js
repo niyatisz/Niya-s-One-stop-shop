@@ -93,6 +93,10 @@ const summaryApi = {
         url: `${backendDomain}/api/create-checkout-session`,
         method: 'POST'
     },
+    clearCart : {
+        url : `${backendDomain}/api/clear-cart`,
+        method : 'POST'
+    }
 }
 export default summaryApi
 
